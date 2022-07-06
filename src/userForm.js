@@ -5,7 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import { Button, TextField } from '@mui/material';
 
 export default function UserForm(props) {
-    const { onClose, open } = props;
+    const { onClose, open, addNewUser } = props;
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
 
@@ -23,15 +23,8 @@ export default function UserForm(props) {
 
         // create a random id with time
         const id = new Date().getTime();
-
-        // add data in userInfo in localStorage
-        const userInfo = JSON.parse(localStorage.getItem('userDetails'));
-        if (userInfo == null) {
-            localStorage.setItem('userDetails', JSON.stringify([{ id, name, email }]));
-            return;
-        }
-        userInfo.push({ id, name, email });
-        localStorage.setItem('userDetails', JSON.stringify(userInfo));
+        // create a new user object
+        addNewUser({ id, name, email });
 
         setEmail('');
         setName('');
@@ -40,7 +33,7 @@ export default function UserForm(props) {
 
     return (
         <Dialog onClose={handleClose} open={open}>
-            <DialogTitle >Add new user</DialogTitle>
+            <DialogTitle>Add new user</DialogTitle>
             <TextField id="standard-basic" label="Name" variant="standard" value={name} onChange={(e) => setName(e.target.value)} />
             <TextField id="standard-basic" label="Email" variant="standard" value={email} onChange={(e) => setEmail(e.target.value)} />
 
@@ -52,4 +45,5 @@ export default function UserForm(props) {
 UserForm.propTypes = {
     onClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired, 
+    addNewUser: PropTypes.func.isRequired
 };

@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { useState } from "react";
 import { Button } from '@mui/material';
 import UserForm from './userForm';
-import UsersList from './UsersList';
+import UserCard from './UserCard';
 
 export default function App() {
-  const [open, setOpen] = useState(false);
-  
+  const [users, setUsers] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -16,16 +15,31 @@ export default function App() {
     setOpen(false);
   };
 
+  const handleAddNewUser = (user) => {
+    setUsers([...users, user]);
+  }
+
+  const handleDeleteUser = (id) => {
+    setUsers(users.filter(user => user.id !== id));
+  }
+
+  const handleEditUser = (user) => {
+    setUsers(users.map(u => u.id === user.id ? user : u));
+  }
+
   return (
     <>
-      <h2>User Data!</h2>
       <UserForm
         open={open}
         onClose={handleClose}
+        addNewUser={handleAddNewUser}
       />
-      <UsersList />
-      <Button variant="contained" onClick={handleClickOpen} style={{margin:"20px"}}> + Add new user</Button>
-      
+
+      {users.map((user, index) => (
+        <UserCard key={index} user={user} deleteUser={handleDeleteUser} editUser={handleEditUser} />
+      ))}
+      <Button variant="contained" onClick={handleClickOpen} style={{margin:"10px"}}> + Add new user</Button>
+
     </>
   );
 }

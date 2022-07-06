@@ -5,9 +5,8 @@ import PreviewIcon from '@mui/icons-material/Preview';
 import React from 'react'
 import UserDialog from './UserDialog';
 import EditUserForm from './EditUser';
-import useState from "react";
 
-function UserCard({ user }) {
+function UserCard({ user, deleteUser, editUser }) {
     const [openDialog, setOpenDialog] = React.useState(false)
     const [openEditDialog, setOpenEditDialog] = React.useState(false)
 
@@ -28,24 +27,18 @@ function UserCard({ user }) {
     }
 
     const handleDelete = () => {
-        // delete the user from localStorage
-        const userInfo = JSON.parse(localStorage.getItem('userDetails'));
-        if (userInfo == null) {
-            return;
-        }
-        const newUserInfo = userInfo.filter(u => u.id !== user.id);
-        localStorage.setItem('userDetails', JSON.stringify(newUserInfo));
+        deleteUser(user.id)
     }
 
     return (
-        <Card style={{ height:"200px",width:"200px",padding:"20px", margin:"10px"}}>
+        <Card style={{height:"200px",width:"200px",display:"flex",justifyContent:"flexStart",alignItems:"center",flexDirection:"column",margin:"20px",padding:"20px"}}>
             <Typography variant="h5" component="h2">
                 {user.name}
             </Typography>
-            <Typography variant="body2" component="p" >
+            <Typography variant="body2" component="p">
                 {user.email}
             </Typography>
-
+            <div style={{display:"flex"}}>
             <IconButton aria-label="delete" color="primary" onClick={handleEdit}>
                 <EditIcon />
             </IconButton>
@@ -54,7 +47,8 @@ function UserCard({ user }) {
             </IconButton>
             <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
                 <DeleteIcon />
-            </IconButton>
+                </IconButton>
+            </div>
 
             <UserDialog
                 userData={user}
@@ -62,7 +56,7 @@ function UserCard({ user }) {
                 onClose={handleCloseDialog}
             />
 
-            <EditUserForm userData={user} open={openEditDialog} onClose={handleCloseEditDialog} />
+            <EditUserForm userData={user} open={openEditDialog} onClose={handleCloseEditDialog} editUser={editUser} />
         </Card>
     )
 }
