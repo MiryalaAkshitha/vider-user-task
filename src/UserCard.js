@@ -1,15 +1,17 @@
-import { Button, Card, IconButton, Typography } from '@mui/material'
+import { Button, Card, IconButton, Typography, Grid } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PreviewIcon from '@mui/icons-material/Preview';
-import React from 'react'
+import React from 'react';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 import UserDialog from './UserDialog';
 import EditUserForm from './EditUser';
 
 function UserCard({ user, deleteUser, editUser }) {
     const [openDialog, setOpenDialog] = React.useState(false)
     const [openEditDialog, setOpenEditDialog] = React.useState(false)
-
     const handlePreview = () => {
         setOpenDialog(true)
     }
@@ -31,22 +33,32 @@ function UserCard({ user, deleteUser, editUser }) {
     }
 
     return (
-        <Card style={{height:"200px",width:"200px",display:"flex",justifyContent:"flexStart",alignItems:"center",flexDirection:"column",margin:"20px",padding:"20px"}}>
-            <Typography variant="h5" component="h2">
-                {user.name}
-            </Typography>
+
+        <Card elevation={3} sx={{ padding: "20px", height: "200px", width: "100%", margin: "10px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography variant="h5" component="h2">
+                    {user.name}
+                </Typography>
+                <MoreVertIcon />
+
+            </Box>
+
             <Typography variant="body2" component="p">
                 {user.email}
             </Typography>
-            <div style={{display:"flex"}}>
-            <IconButton aria-label="delete" color="primary" onClick={handleEdit}>
-                <EditIcon />
-            </IconButton>
-            <IconButton aria-label="delete" color="primary" onClick={handlePreview}>
-                <PreviewIcon />
-            </IconButton>
-            <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
-                <DeleteIcon />
+
+            <Typography variant="body2" component="p">
+                {user.number}
+            </Typography>
+            <div>
+                <IconButton aria-label="delete" color="primary" onClick={handleEdit}>
+                    <EditIcon />
+                </IconButton>
+                <IconButton aria-label="delete" color="primary" onClick={handlePreview}>
+                    <PreviewIcon />
+                </IconButton>
+                <IconButton aria-label="delete" color="secondary" onClick={handleDelete}>
+                    <DeleteIcon />
                 </IconButton>
             </div>
 
@@ -58,6 +70,7 @@ function UserCard({ user, deleteUser, editUser }) {
 
             <EditUserForm userData={user} open={openEditDialog} onClose={handleCloseEditDialog} editUser={editUser} />
         </Card>
+
     )
 }
 
