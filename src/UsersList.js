@@ -4,8 +4,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import UserCard from './UserCard';
 
-export default function UsersList() {
-    const [users, setUsers] = React.useState([]);
+// export default function UsersList() {
+//     const [users, setUsers] = React.useState([]);
+
 
     // fetch the users from localhost
     // React.useEffect(() => {
@@ -15,11 +16,12 @@ export default function UsersList() {
     //     }
     //     setUsers(userInfo);
     // }, []);
-    return (
-        <>
-            {users.map((user, index) => (
-                <UserCard key={index} user={user} />
-            ))}
-        </>
-    );
-}
+//     return (
+//         <>
+//             {users.map((user, index) => (
+//                 <UserCard key={index} user={user} />
+
+//             ))}
+//         </>
+//     );
+// }
